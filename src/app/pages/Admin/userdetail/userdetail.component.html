@@ -1,0 +1,397 @@
+<div class="container-fluid">
+  <app-page-title title="Profile" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row mb-4">
+  
+
+    <div class="col-xl-8">
+      <div class="card mb-0">
+        <!-- Nav tabs -->
+        <ul ngbNav #justifiednav="ngbNav" [activeId]="1" class="nav nav-tabs nav-justified nav-tabs-custom">
+          <li [ngbNavItem]="1" class="nav-item">
+            <a ngbNavLink class="nav-link">
+              <i class="bx uil-ticket"></i>
+              <span class="d-none d-sm-block">Tickets({{Ticketdata.length}})</span>
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template [ngTemplateOutlet]="TabContentAbout"></ng-template>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="2" class="nav-item">
+            <a ngbNavLink class="nav-link">
+              <i class="uil uil-clipboard-notes font-size-20"></i>
+              <span class="d-none d-sm-block">Tasks</span>
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template [ngTemplateOutlet]="TabContentTasks"></ng-template>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="3" class="nav-item">
+            <a ngbNavLink class="nav-link">
+              <i class="uil uil-envelope-alt font-size-20"></i>
+              <span class="d-none d-sm-block">Messages</span>
+            </a>
+            <ng-template ngbNavContent>
+              <ng-template [ngTemplateOutlet]="TabContentMessages"></ng-template>
+            </ng-template>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="justifiednav"></div>
+      </div>
+
+      <!-- Tab content -->
+      <ng-template #TabContentAbout>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <div>
+              <div>
+                <h5 class="font-size-16 mb-4">Tickets</h5>
+
+                <ul class="activity-feed mb-0 ps-2">
+                  <li class="feed-item" *ngFor="let item of Ticketdata">
+                    <div class="feed-item-list">
+                      <p class="text-muted mb-1">Created Date : {{item.ticketinfo.creationDate|date}}</p>
+                      <h5 class="font-size-16"> Type: {{item.ticketType.ticketName}}    Replies({{item.perticketreplies}})<span style="float: right;">${{item.offerPrice}}</span> </h5>
+                      <p>Conditions:{{item.ticketinfo.cond}}</p>
+                      <p>Notes: {{item.ticketinfo.notes}}</p>
+                      
+                      <p class="text-muted">
+                       {{item.ticketinfo.description}}
+                      </p>
+                    </div>
+                  </li>
+                
+                </ul>
+              </div>
+
+             
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #TabContentTasks>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <!-- <div>
+              <h5 class="font-size-16 mb-3">Active</h5>
+
+              <div class="table-responsive">
+                <table class="table table-nowrap table-centered">
+                  <tbody>
+                    <tr>
+                      <td style="width: 60px">
+                        <div class="form-check font-size-16 text-center">
+                          <input type="checkbox" class="form-check-input" id="tasks-activeCheck2" />
+                          <label class="form-check-label" for="tasks-activeCheck2"></label>
+                        </div>
+                      </td>
+                      <td>
+                        <a href="javascript:void(0)" class="fw-bold text-dark">Ecommerce Product Detail</a>
+                      </td>
+
+                      <td>27 May, 2020</td>
+                      <td style="width: 160px">
+                        <span class="badge bg-soft-primary font-size-12">Active</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check font-size-16 text-center">
+                          <input type="checkbox" class="form-check-input" id="tasks-activeCheck1" />
+                          <label class="form-check-label" for="tasks-activeCheck1"></label>
+                        </div>
+                      </td>
+                      <td>
+                        <a href="javascript:void(0)" class="fw-bold text-dark">Ecommerce Product</a>
+                      </td>
+
+                      <td>26 May, 2020</td>
+                      <td>
+                        <span class="badge bg-soft-primary font-size-12">Active</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h5 class="font-size-16 my-3">Upcoming</h5>
+
+              <div class="table-responsive">
+                <table class="table table-nowrap table-centered">
+                  <tbody>
+                    <tr>
+                      <td style="width: 60px">
+                        <div class="form-check font-size-16 text-center">
+                          <input type="checkbox" class="form-check-input" id="tasks-upcomingCheck3" />
+                          <label class="form-check-label" for="tasks-upcomingCheck3"></label>
+                        </div>
+                      </td>
+                      <td>
+                        <a href="javascript:void(0)" class="fw-bold text-dark">Chat app Page</a>
+                      </td>
+
+                      <td>-</td>
+                      <td style="width: 160px">
+                        <span class="badge bg-soft-secondary font-size-12">Waiting</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check font-size-16 text-center">
+                          <input type="checkbox" class="form-check-input" id="tasks-upcomingCheck2" />
+                          <label class="form-check-label" for="tasks-upcomingCheck2"></label>
+                        </div>
+                      </td>
+                      <td>
+                        <a href="javascript:void(0)" class="fw-bold text-dark">Email Pages</a>
+                      </td>
+
+                      <td>04 June, 2020</td>
+                      <td>
+                        <span class="badge bg-soft-primary font-size-12">Approved</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check font-size-16 text-center">
+                          <input type="checkbox" class="form-check-input" id="tasks-upcomingCheck1" />
+                          <label class="form-check-label" for="tasks-upcomingCheck1"></label>
+                        </div>
+                      </td>
+                      <td>
+                        <a href="javascript:void(0)" class="fw-bold text-dark">Contacts Profile Page</a>
+                      </td>
+
+                      <td>-</td>
+                      <td>
+                        <span class="badge bg-soft-secondary font-size-12">Waiting</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h5 class="font-size-16 my-3">Complete</h5>
+
+              <div class="table-responsive">
+                <table class="table table-nowrap table-centered">
+                  <tbody>
+                    <tr>
+                      <td style="width: 60px">
+                        <div class="form-check font-size-16 text-center">
+                          <input type="checkbox" class="form-check-input" id="tasks-completeCheck3" />
+                          <label class="form-check-label" for="tasks-completeCheck3"></label>
+                        </div>
+                      </td>
+                      <td>
+                        <a href="javascript:void(0)" class="fw-bold text-dark">UI Elements</a>
+                      </td>
+
+                      <td>27 May, 2020</td>
+                      <td style="width: 160px">
+                        <span class="badge bg-soft-success font-size-12">Complete</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check font-size-16 text-center">
+                          <input type="checkbox" class="form-check-input" id="tasks-completeCheck2" />
+                          <label class="form-check-label" for="tasks-completeCheck2"></label>
+                        </div>
+                      </td>
+                      <td>
+                        <a href="javascript:void(0)" class="fw-bold text-dark">Authentication Pages</a>
+                      </td>
+
+                      <td>27 May, 2020</td>
+                      <td>
+                        <span class="badge bg-soft-success font-size-12">Complete</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check font-size-16 text-center">
+                          <input type="checkbox" class="form-check-input" id="tasks-completeCheck1" />
+                          <label class="form-check-label" for="tasks-completeCheck1"></label>
+                        </div>
+                      </td>
+                      <td>
+                        <a href="javascript:void(0)" class="fw-bold text-dark">Admin Layout</a>
+                      </td>
+
+                      <td>26 May, 2020</td>
+                      <td>
+                        <span class="badge bg-soft-success font-size-12">Complete</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template #TabContentMessages>
+        <div class="tab-content p-4">
+          <div class="tab-pane active">
+            <!-- <div>
+              <ngx-simplebar style="max-height: 430px">
+                <div class="d-flex align-items-start border-bottom py-4">
+                  <img class="me-2 rounded-circle avatar-xs" src="assets/images/users/avatar-3.jpg" alt="" />
+                  <div class="flex-1">
+                    <h5 class="font-size-15 mt-0 mb-1">
+                      Marion Walker
+                      <small class="text-muted float-end">1 hr ago</small>
+                    </h5>
+                    <p class="text-muted">
+                      If several languages coalesce, the grammar of the
+                      resulting .
+                    </p>
+
+                    <a href="javascript: void(0);" class="text-muted font-13 d-inline-block"><i
+                        class="mdi mdi-reply"></i> Reply</a>
+
+                    <div class="d-flex align-items-start mt-4">
+                      <img class="me-2 rounded-circle avatar-xs" src="assets/images/users/avatar-4.jpg" alt="" />
+                      <div class="flex-1">
+                        <h5 class="font-size-15 mt-0 mb-1">
+                          Shanon Marvin
+                          <small class="text-muted float-end">1 hr ago</small>
+                        </h5>
+                        <p class="text-muted">
+                          It will be as simple as in fact, it will be
+                          Occidental. To it will seem like simplified .
+                        </p>
+
+                        <a href="javascript: void(0);" class="text-muted font-13 d-inline-block">
+                          <i class="mdi mdi-reply"></i> Reply
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-start border-bottom py-4">
+                  <img class="me-2 rounded-circle avatar-xs" src="assets/images/users/avatar-5.jpg" alt="" />
+                  <div class="flex-1">
+                    <h5 class="font-size-15 mt-0 mb-1">
+                      Janice Morgan
+                      <small class="text-muted float-end">2 hrs ago</small>
+                    </h5>
+                    <p class="text-muted">
+                      To achieve this, it would be necessary to have uniform
+                      pronunciation.
+                    </p>
+
+                    <a href="javascript: void(0);" class="text-muted font-13 d-inline-block"><i
+                        class="mdi mdi-reply"></i> Reply</a>
+                  </div>
+                </div>
+
+                <div class="d-flex align-items-start border-bottom py-4">
+                  <img class="me-2 rounded-circle avatar-xs" src="assets/images/users/avatar-7.jpg" alt="" />
+                  <div class="flex-1">
+                    <h5 class="font-size-15 mt-0 mb-1">
+                      Patrick Petty
+                      <small class="text-muted float-end">3 hrs ago</small>
+                    </h5>
+                    <p class="text-muted">
+                      Sed ut perspiciatis unde omnis iste natus error sit
+                    </p>
+
+                    <a href="javascript: void(0);" class="text-muted font-13 d-inline-block"><i
+                        class="mdi mdi-reply"></i> Reply</a>
+                  </div>
+                </div>
+              </ngx-simplebar>
+
+              <div class="border rounded mt-4">
+                <form action="#">
+                  <div class="px-2 py-1 bg-light">
+                    <div class="btn-group" role="group">
+                      <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none">
+                        <i class="uil uil-link"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none">
+                        <i class="uil uil-smile"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-link text-dark text-decoration-none">
+                        <i class="uil uil-at"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <textarea rows="3" class="form-control border-0 resize-none" placeholder="Your Message..."></textarea>
+                </form>
+              </div>
+        
+            </div> -->
+          </div>
+        </div>
+      </ng-template>
+    </div>
+    <div class="col-xl-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="text-center">
+            <div class="dropdown float-end" ngbDropdown>
+              <a class="text-body dropdown-toggle font-size-18" href="javascript:void(0)" role="button"
+                ngbDropdownToggle>
+                <i class="uil uil-ellipsis-v"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                
+                <a class="dropdown-item" href="javascript:void(0)">Remove</a>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div>
+              <img src="assets/blank-profile-picture-973460_640.png" alt="" class="avatar-lg rounded-circle img-thumbnail" />
+            </div>
+            <h5 class="mt-3 mb-1">{{UserName}}</h5>
+            <p class="text-muted">{{email}}</p>
+
+           
+          </div>
+
+          <hr class="my-4" />
+
+          <div class="text-muted">
+          
+            <div class="table-responsive mt-4">
+              <div>
+                <p class="mb-1">Name :</p>
+                <h5 class="font-size-16">{{UserName}}</h5>
+              </div>
+              <div class="mt-4">
+                <p class="mb-1">Mobile :</p>
+                <a href="tel:{{contactno}}"  class="nav-link" style="color: black;">
+                  <i class="uil-phone"></i>
+                  {{contactno}}
+                </a>
+              </div>
+              <div class="mt-4">
+                <p class="mb-1">E-mail :</p>
+                <a href="mailto:{{email}}"  class="nav-link"  style="color: black;">
+                  <i class="uil-envelope"></i>
+                  {{email}}
+                </a> 
+              </div>
+              <div class="mt-4">
+                <p class="mb-1">Associated Company:</p>
+                <a (click)="companydetail(companyinfo.companyId)"  class="nav-link"  style="color: black;">
+                  <i class="bx uil-building me-2"></i>
+                  {{companyinfo?.comapnyName}}
+                </a> 
+              </div>
+           
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "pacman" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

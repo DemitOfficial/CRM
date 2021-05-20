@@ -1,0 +1,168 @@
+<div class="container-fluid">
+  <app-page-title title="Users" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">All Registered Users</h4>
+         
+          <div class="row mb-md-2">
+            <div class="col-sm-12 col-md-6">
+          
+              <div class="dataTables_length" id="tickets-table_length"><label
+                  class="d-inline-flex align-items-center">Show
+                
+                  <select  id="exampleFormControlSelect1" [(ngModel)]="selectedValue" aria-controls="tickets-table" 
+                  class="form-control form-control-sm mx-2">
+                    <option *ngFor="let quantity of data" [ngValue]="quantity">{{quantity}}</option>
+                  </select> entries</label></div>
+            </div>
+            <!-- Search -->
+            <div class="col-sm-12 col-md-6">
+              <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
+                  class="d-inline-flex align-items-center">Search:
+                  <input type="text" name="searchTerm" class="form-control form-control-sm ms-2"
+                    aria-controls="tickets-table" [(ngModel)]="term"></label></div>
+            </div>
+            <!-- End search -->
+          </div>
+          <!-- Table -->
+          <div class="table-responsive">
+            <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 datatables">
+              <thead>
+                <tr>
+                  <th sortable="i" (click)="Sort('i')">#</th>
+                  <th sortable="name" (click)="Sort('name')">Name</th>
+                  <th sortable="name" (click)="Sort('name')">Associated Company</th>
+                  <th sortable="contact" (click)="Sort('contact')">Contact No</th>
+                  <th  sortable="email" (click)="Sort('email')" >Email</th>
+                 
+                  <th>Action</th>
+                  <!-- <th sortable="age" (sort)="onSort($event)">Age</th> -->
+                
+                </tr>
+              </thead>
+              <tbody *ngFor="let item of UsersList|filter:term|orderBy:key :reverse|paginate:{itemsPerPage:selectedValue,currentPage:p}; let i=index;" >
+                <tr >
+                      <td>{{i+1}}</td>
+                  <td >
+                   
+                    <a (click)="getuserinfo(item.user.userId)" > {{item.user?.name}}</a>
+                
+                  </td>
+                  <td >
+                   
+                    <a > {{item.company?.comapnyName}}</a>
+                
+                  </td>
+                  <td>
+                    <a href="tel:{{item.user.phone}}" ><i class="fas fa-phone" style="padding-right:10px ;"></i>{{item.user.contact}}</a>
+                
+                  </td>
+                  <td>
+                    <a href="mailto:{{item.user.email}}" ><i class="bx uil-envelope" style="padding-right:10px ;"></i>{{item.user.email}} </a>
+                  </td>
+            <td>
+              <a class="btn btn-outline-success btn-sm edit" (click)="getuserinfo(item.user.userId)" title="Details" >
+                <i class="uil-eye"></i>
+            </a >
+            <a class="btn btn-outline-info btn-sm edit" (click)="Edit(Update,item.user.userId)" title="Edit" style="margin-left: 5px;" >
+              <i class="fas fa-pencil-alt"></i>
+          </a >
+         
+            <a class="btn btn-outline-danger btn-sm edit" (click)="DeleteUser(item.user.userId)" title="Remove" style="margin-left: 5px;">
+              <i class="uil-trash-alt"></i>
+          </a >
+
+            </td>                 
+                
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- End table -->
+          <div class="row justify-content-md-between align-items-md-center mt-2">
+            <div class="col-sm-12 col-md-5">
+              
+            </div>
+            <!-- Pagination -->
+            <div class="col-sm-12 col-md-5">
+              <div class="text-md-end float-md-end pagination-rounded">
+                <!-- <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+                </ngb-pagination> -->
+ <pagination-controls (pageChange)="p=$event" aria-label="Default pagination"></pagination-controls> 
+   </div>
+            </div>
+            <!-- End Pagination -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #Update let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0"> Update User Profile </h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <form [formGroup]="userform">
+      <fieldset class="mb-3">
+      
+  
+    
+
+        <div class="form-group row">
+          <label class="col-form-label col-lg-2">Name <sup style="color: red;">*</sup> </label>
+          <div class="col-lg-10">
+            <input type="text"  formControlName="name" placeholder="Please Enter The Name" class="form-control">
+          </div>
+        </div>
+        <br>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-2">Contact No <sup style="color: red;">*</sup> </label>
+          <div class="col-lg-10">
+            <input type="text"  formControlName="contact" placeholder="Please Enter The Contact" class="form-control">
+         
+          </div>
+        </div>
+      
+     <br>
+     <div class="form-group row">
+      <label class="col-form-label col-lg-2">Email <sup style="color: red;">*</sup> </label>
+      <div class="col-lg-10">
+        <input type="text"  formControlName="email" placeholder="Please Enter The Email" class="form-control">
+     
+      </div>
+    </div>
+    <br>
+    <div class="form-group row">
+     <label class="col-form-label col-lg-2">Password <sup style="color: red;">*</sup> </label>
+     <div class="col-lg-10">
+       <input type="text"  formControlName="password" placeholder="Password" disabled class="form-control">
+    
+     </div>
+   </div>
+      
+      </fieldset>
+
+     
+
+    
+
+  
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-dismiss="modal" #dismismodal>Close</button>
+   
+    <button type="button" class="btn btn-info" (click)="updateConfirm()">Update Confirm</button>
+  </div>
+</ng-template>
+
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "pacman" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

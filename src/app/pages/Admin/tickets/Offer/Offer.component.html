@@ -1,0 +1,124 @@
+<div class="container-fluid">
+  <app-page-title title="Ticktes" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Offer Tickets</h4>
+          <p class="card-sub-title">
+            Offer Tickets Details
+          </p>
+          <div class="row mb-md-2">
+            <div class="col-sm-12 col-md-6">
+              <div class="dataTables_length" id="tickets-table_length"><label
+                  class="d-inline-flex align-items-center">Show
+                
+                  <select  id="exampleFormControlSelect1" [(ngModel)]="selectedValue" aria-controls="tickets-table" 
+                  class="form-control form-control-sm mx-2">
+                    <option *ngFor="let quantity of data" [ngValue]="quantity">{{quantity}}</option>
+                  </select> entries</label></div>
+            </div>
+            <!-- Search -->
+            <div class="col-sm-12 col-md-6">
+              <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
+                  class="d-inline-flex align-items-center">Search:
+                  <input type="text" name="searchTerm" class="form-control form-control-sm ms-2"
+                    aria-controls="tickets-table" [(ngModel)]="term"></label></div>
+            </div>
+            <!-- End search -->
+          </div>
+          <!-- Table -->
+          <div class="table-responsive">
+            <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 datatables">
+              <thead>
+                <tr>
+              
+                    <th>#</th>
+                    <th  (click)="Sort('ticketinfo.customer.name')" >Customer Name</th>
+                   
+                    <th  (click)="Sort('ticketinfo.ticketId')" >Ticket No</th>
+                   
+              
+                    <th  (click)="Sort('ticketinfo.description')" >Description</th>
+                    <th (click)="Sort('ticketinfo.cond')" >CONDITION </th>
+                 
+                    <th (click)="Sort('ticketinfo.qty')" >Qty  </th>
+                    <th (click)="Sort('ticketinfo.qty')" >Offer Price  </th>
+                    <th (click)="Sort('ticketinfo.notes')">NOTES & <br> INQUERIES </th>
+                    <th (click)="Sort('ticketinfo.creationDate')" >CREATED Date </th>
+                   <th>Actions</th>
+ 
+              </thead>
+              <tbody  *ngFor="let item of Offertickets|filter:term|orderBy:key :reverse|paginate:{itemsPerPage:selectedValue,currentPage:p}; let i=index;" >
+                <tr >
+                  <td>{{i+1}}</td>
+                  <td><a (click)="getuserinfo(item.ticketinfo.customer.userId)" style=" cursor: pointer;"> {{item.ticketinfo.customer.name}}</a></td>
+                 
+                  <td (click)="ticketdetail(item.ticketinfo.ticketId)" style=" cursor: pointer;">{{item.ticketinfo.ticketId}}</td>
+                <td (click)="ticketdetail(item.ticketinfo.ticketId)" style=" cursor: pointer;">{{item.ticketinfo.description|slice:0:25}}</td>
+                  <td (click)="ticketdetail(item.ticketinfo.ticketId)" style=" cursor: pointer;">{{item.ticketinfo.cond|slice:0:15}}</td>
+                  <td (click)="ticketdetail(item.ticketinfo.ticketId)" style=" cursor: pointer;">{{item.ticketinfo.qty}}</td>
+                  <td (click)="ticketdetail(item.ticketinfo.ticketId)" style=" cursor: pointer;">$ {{item.ticketinfo.offerPrice}}</td>
+                  <td (click)="ticketdetail(item.ticketinfo.ticketId)" style=" cursor: pointer;">{{item.ticketinfo.notes |slice:0:25}}</td>
+                  <td (click)="ticketdetail(item.ticketinfo.ticketId)" style=" cursor: pointer;">{{item.ticketinfo.creationDate |date}}</td>
+             <td><a (click)="ticketreply(item.ticketinfo.ticketId)"  class="text-default"><i class="uil-envelope" ></i>({{item.perticketreplies}})  Replies</a>
+              <a (click)="Createlink(Create1,item.ticketinfo.ticketId)"  class="text-default"><i class="uil-share-alt" title="Share With Others"></i></a> 
+            </td>   </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- End table -->
+          <div class="row justify-content-md-between align-items-md-center mt-2">
+            <div class="col-sm-12 col-md-5">
+              
+            </div>
+            <!-- Pagination -->
+            <div class="col-sm-12 col-md-5">
+              <div class="text-md-end float-md-end pagination-rounded">
+                <!-- <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+                </ngb-pagination> -->
+ <pagination-controls (pageChange)="p=$event" aria-label="Default pagination"></pagination-controls> 
+   </div>
+            </div>
+            <!-- End Pagination -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #Create1 let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Shareable link </h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+
+    </button>
+  </div>
+
+  <div class="modal-body">
+
+    <div class="container">
+      <p>{{shareablelink}}   <i class="uil-copy"  (click)="copyMessage()" ngbTooltip="Copy to Clipboard"  style="    margin-left: 74px;
+        font-size: 36px;
+        color: #003f6c;"></i></p>
+        <div *ngIf="IsCoppied">
+          <ngb-alert [dismissible]="false" type="success">
+            Url Coppied successfully  ! Ctrl+v to past into your Url
+          </ngb-alert>
+        </div>
+    
+       
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-dismiss="modal" #dismismodal>Close</button>
+    
+   
+ </div>
+</ng-template>
+
+
+
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "pacman" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+

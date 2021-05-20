@@ -1,0 +1,25 @@
+.modal {
+    padding: 0 !important; 
+  }
+  .modal .modal-dialog {
+    width: 50%;
+    float: right;
+    max-width: none;
+    height: 100%;
+    margin: 0;
+  }
+  .modal .modal-content {
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+  .modal .modal-body {
+    overflow-y: auto;
+  }
+  input[type=text] {
+  font-weight: bold;
+  }
+  input[type=number] {
+    font-weight: bold;
+    }
+    

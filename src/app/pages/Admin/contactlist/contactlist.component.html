@@ -1,0 +1,450 @@
+<div class="container-fluid">
+  <app-page-title title="Users" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="row">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        
+            <!-- Basic layout-->
+            <div class="container">
+            
+        
+              <div class="card-body">
+             
+                  <div class="form-group row">
+                   
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" >
+                      <div >
+                       
+              
+                        <div class="card-body">
+                       
+                          <h2>Total Users({{contactlist.length}})</h2>
+                     
+                          <div class="row">
+                            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4">
+                              <label><span>Filter:</span> <input type="search" c [(ngModel)]="term" class="form-control" placeholder="Type to filter..." aria-controls="DataTables_Table_0"> </label>
+                           
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-xl-2 col-sm-2">
+                           
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-xl-2 col-sm-2">
+                              
+                        
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-4">
+                              <label style="float:right">
+                                <span>Show:</span> 
+                                <select  class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectedValue">
+                                  <option *ngFor="let quantity of data2" [ngValue]="quantity">{{quantity}}</option>
+                            </select>
+                                
+                            </label>   </div>
+                      </div>
+                       </div>
+                       <div class="row" >
+                        <div class="col-md-7"> 
+
+                        </div>
+                        <div class="col-md-1"> 
+                          <a  style="float: right;" class="btn btn-success">  <input type="file" (change)="uploadExcel($event,Addmodal)" > </a>
+                       
+                        </div>
+                        <div class="col-md-2"> 
+                          <a  style="float: right;margin-right:5px" class="btn btn-danger" (click)="exportexcel()" >Export to Excel </a>
+                        </div>
+                        <div class="col-md-2"> 
+                          <a  style="float: right;margin-right:5px" class="btn btn-info" (click)="Createcontact(Create)" >Add Contact No</a>
+                        </div>
+                       
+                        </div>
+
+                      
+                        <div class="table" style="margin: 15px;">
+                      
+                          <table class="table  dt-responsive nowrap w-100 ">
+                            <thead>
+                             
+                              <tr>
+                                <th scope="col" style="width: 50px;" *ngIf="SelectedValues.length==0">
+                                  <div class="form-check font-size-16">
+                                      <input type="checkbox" class="form-check-input"  (click)="AddAllQouted()" id="contacusercheck">
+                                      <label class="form-check-label" for="contacusercheck"></label>
+                                  </div>
+                                </th>
+                                <th scope="col" style="width: 50px;" *ngIf="SelectedValues.length!=0">
+                                  <div class="form-check font-size-16">
+                                    <input type="checkbox" class="form-check-input" *ngIf="!checker"  (click)="AddAllQouted()" id="contacusercheck">
+                                    <input type="checkbox" checked class="form-check-input" *ngIf="checker"  (click)="AddAllQouted()" id="contacusercheck">
+                                    
+                                    <i class="uil-trash-alt" (click)="Removecontacts()"></i>
+                                  </div>
+                                </th>
+                                <th (click)="Sort('name')" class="sorting"  >#</th>
+                                <th (click)="Sort('name')" class="sorting"  >Name</th>
+                                <th (click)="Sort('phone')"   class="sorting"  >Contact</th>
+                                <th (click)="Sort('email')" >Email</th>
+                                <th (click)="Sort('address')"  class="sorting"  >Address</th>
+                                <th (click)="Sort('type')">Type</th>
+                                <th   >Action</th>
+                              </tr>
+                            </thead>
+                            <tbody #epltable>
+                              <tr  *ngFor="let item of UsersList |filter:term|orderBy:key :reverse|paginate:{itemsPerPage:selectedValue,currentPage:p}; let i=index;">
+                              
+                                <th scope="col" style="width: 50px;">
+
+                                  <div class="form-check text-center">
+                                    <input type="checkbox" class="form-check-input" id="invoicecheck3" *ngIf="!checked;else chk" (click)="AddQuote(item.contactId)" type="checkbox">
+                                    <label class="form-check-label" for="invoicecheck3"></label>
+                                </div>
+                                <ng-template #chk>
+                                  <div class="form-check text-center">
+                                    <input type="checkbox" class="form-check-input" id="invoicecheck3"(click)="AddQuote(item.contactId)" type="checkbox" checked>
+                                    <label class="form-check-label" for="invoicecheck3"></label>
+                                </div>
+                               
+                                </ng-template>
+                                 
+                                </th>
+                                <th>{{i+1}}</th>
+                                <th *ngIf="item.type=='User'">
+                                  <img [src]="imagebaseurl+item.Image" alt="No Image" class="avatar-xs rounded-circle me-3">
+                                  <a href="javascript:void(0);" class="text-body">    {{item?.name}}</a>
+                                </th>
+                                <th *ngIf="item.type=='Contact'">
+                                  <div class="avatar-xs d-inline-block me-3">
+                                    <div class="avatar-title bg-soft-primary rounded-circle text-primary">
+                                        <i class="mdi mdi-account-circle m-0"></i>
+                                    </div>
+                                  </div>
+                                  <a href="javascript:void(0);" class="text-body">    {{item?.name}}</a>
+                                  
+                                </th>
+          
+                                <th>       <a href="tel:{{item.phone}}" ><i class="icon-phone2" style="padding-right:10px ;"></i>{{item?.phone}}</a>
+                                </th>
+                                <th> <a href="mailto:{{item.email}}" ><i class="icon-envelop" style="padding-right:10px ;"></i>{{item?.email}} </a></th>
+                                <th>{{item?.address}}</th>
+                                <th >{{item.type}} </th>
+                          
+                                <th>
+
+                                  <ul class="list-inline mb-0" *ngIf="SelectedValues.length==0">
+                                    <li class="list-inline-item"  (click)="CData(ContactData,item.contactId,'Edit')" title="Edit">
+                                      <a class="btn btn-outline-secondary btn-sm edit" >
+                                        <i class="fas fa-pencil-alt" title="Edit"></i>
+                                    </a>
+                                       </li>
+                                    <li class="list-inline-item"  (click)="CData(ContactData,item.contactId,'remove')" title="Remove" >
+                                      <a class="btn btn-outline-danger btn-sm edit">
+                                        <i class="uil-trash-alt"></i>
+                                    </a >   </li>
+                                    <li class="list-inline-item dropdown" ngbDropdown>
+                                      
+                                        <a class="text-muted dropdown-toggle font-size-18 px-2" href="javascript:void(0);" role="button" ngbDropdownToggle>
+                                            <i class="uil uil-ellipsis-v"></i>
+                                        </a>
+            
+                                        <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+                                          <a class="dropdown-item" href="javascript:void(0);" *ngIf="item.type=='User'" (click)="getuserinfo(item.userId)" title="Details">Detail</a>
+                                          <a class="dropdown-item" href="javascript:void(0);" (click)="Createlink(Create1,item.contactId)" title="Link">Share Via Link</a>
+                                        
+                                      
+                                        </div>
+                                    </li>
+                                  </ul>
+                                
+                               
+                             
+                             
+           
+                                </th>
+                              </tr>
+                          
+                            </tbody>
+                        
+                          </table>
+                        
+
+
+
+                          <pagination-controls (pageChange)="p=$event"></pagination-controls> 
+                 
+                        </div>
+                   
+                     
+  
+              </div>
+      
+            </div>
+        
+          </div>
+       
+    
+        <div  id="modal_theme_info" class="modal   fade" tabindex="-1">
+          <div class="modal-full-height  modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header bg-info">
+                <h6 class="modal-title" style="font-weight: bold;font-size: 15px;">{{operationname}}</h6>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+        
+              <div class="modal-body">
+              
+        
+                  <div >
+                   
+                    <div>
+                      <fieldset class="mb-3">
+                      
+                        
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-2"> Name <sup style="color: red;">*</sup> </label>
+                         <div class="col-lg-10">
+                            <input type="text" [(ngModel)]="Name"   placeholder=" Name" class="form-control">
+                        
+                             </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-2"> Contact <sup style="color: red;">*</sup> </label>
+                         <div class="col-lg-10">
+                            <input type="text" [(ngModel)]="Contact"   placeholder=" Contact No " class="form-control">
+                        
+                             </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-2"> Email <sup style="color: red;">*</sup> </label>
+                         <div class="col-lg-10">
+                            <input type="text" [(ngModel)]="Email"   placeholder=" Email" class="form-control">
+                        
+                             </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-2">Address <sup style="color: red;">*</sup> </label>
+                          <div class="col-lg-10">
+                            <textarea [(ngModel)]="Address" placeholder="Address" class="form-control"></textarea>
+                        
+                          </div>
+                        </div>   
+                  
+                       
+                      </fieldset>
+        
+                     
+        
+                    
+        
+                  
+                   </div>
+                  </div>
+             
+        
+              <div class="modal-footer" *ngIf="Create">
+                <br>
+                <br>
+                <button type="button" class="btn btn-link" data-dismiss="modal" #dismismodal>Close</button>
+                <button type="button" (click)="SaveConfirmContact()" class="btn bg-info">Save Contact</button>
+              </div>
+              <div class="modal-footer" *ngIf="Update">
+                <br>
+                <br>
+                <button type="button" class="btn btn-link" data-dismiss="modal" #dismismodal>Close</button>
+                <button type="button" (click)="UpdateConfirm()" class="btn bg-info" >Update </button>
+              
+              </div>
+              <div class="modal-footer" *ngIf="Del">
+                <br>
+                <br>
+                <button type="button" class="btn btn-link" data-dismiss="modal" #dismismodal>Close</button>
+                <button type="button" (click)="DeleteCompany()" class="btn bg-info">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+     </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #Addmodal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">File Data()</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="table-responsive">
+      <table class="table mb-0">
+
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Contact</th>
+              <th>Email</th>
+              <th>Address</th>
+              
+            </tr>
+          </thead>
+          <tbody *ngFor="let product of productlist; let i = index">
+            <tr >
+              <td>{{i+1}}</td>
+                <td>{{product.Name}}</td>
+                <td>{{product.Phone}}</td>
+                <td>{{product.Email}}</td>
+                <td>{{product.Address}}</td>
+                
+              </tr>
+            
+          </tbody>
+      </table>
+  </div>
+  
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary"(click)="uploadExcelFile()" >Export to DataBase</button>
+  </div>
+</ng-template>
+<ng-template #Create let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Create New Contact </h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <fieldset class="mb-3">
+              
+                
+      <div class="form-group row">
+        <label class="col-form-label col-lg-2"> Name <sup style="color: red;">*</sup> </label>
+       <div class="col-lg-10">
+          <input type="text" [(ngModel)]="Name"   placeholder=" Name" class="form-control">
+      
+           </div>
+      </div>
+      <br>
+      <div class="form-group row">
+        <label class="col-form-label col-lg-2"> Contact <sup style="color: red;">*</sup> </label>
+       <div class="col-lg-10">
+          <input type="text" [(ngModel)]="Contact"   placeholder=" Contact No " class="form-control">
+      
+           </div>
+      </div>
+      <br>
+      <div class="form-group row">
+        <label class="col-form-label col-lg-2"> Email <sup style="color: red;">*</sup> </label>
+       <div class="col-lg-10">
+          <input type="text" [(ngModel)]="Email"   placeholder=" Email" class="form-control">
+      
+           </div>
+      </div>
+      <br>
+      <div class="form-group row">
+        <label class="col-form-label col-lg-2">Address <sup style="color: red;">*</sup> </label>
+        <div class="col-lg-10">
+          <textarea [(ngModel)]="Address" placeholder="Address" class="form-control"></textarea>
+      
+        </div>
+      </div>   
+
+     
+    </fieldset>
+  
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+    <button type="button" (click)="SaveConfirmContact()" class="btn btn-info">Save Contact</button>
+  </div>
+</ng-template>
+<ng-template #ContactData let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">{{operationname}}</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <fieldset class="mb-3">
+              
+                
+      <div class="form-group row">
+        <label class="col-form-label col-lg-2"> Name <sup style="color: red;">*</sup> </label>
+       <div class="col-lg-10">
+          <input type="text" [(ngModel)]="Name"   placeholder=" Name" class="form-control">
+      
+           </div>
+      </div>
+      <br>
+      <div class="form-group row">
+        <label class="col-form-label col-lg-2"> Contact <sup style="color: red;">*</sup> </label>
+       <div class="col-lg-10">
+          <input type="text" [(ngModel)]="Contact"   placeholder=" Contact No " class="form-control">
+      
+           </div>
+      </div>
+      <br>
+      <div class="form-group row">
+        <label class="col-form-label col-lg-2"> Email <sup style="color: red;">*</sup> </label>
+       <div class="col-lg-10">
+          <input type="text" [(ngModel)]="Email"   placeholder=" Email" class="form-control">
+      
+           </div>
+      </div>
+      <br>
+      <div class="form-group row">
+        <label class="col-form-label col-lg-2">Address <sup style="color: red;">*</sup> </label>
+        <div class="col-lg-10">
+          <textarea [(ngModel)]="Address" placeholder="Address" class="form-control"></textarea>
+      
+        </div>
+      </div>   
+
+     
+    </fieldset>
+  
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+    <button type="button" (click)="UpdateConfirm()" class="btn btn-info" *ngIf="Update &&IsUser">Update </button>
+    <button type="button" (click)="UpdateCustomerConfirm()" class="btn btn-info" *ngIf="Update && !IsUser">Update </button>
+    <button type="button" (click)="DeleteCompany()" class="btn btn-info" *ngIf="Del">Remove</button>
+  </div>
+</ng-template>
+<ng-template #Create1 let-modal>
+  <div class="modal-header">
+    <p class="modal-title mt-0">Shareable link </p>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="container">
+      <p>{{shareablelink}}   <i class="uil-copy"  (click)="copyMessage()" ngbTooltip="Copy to Clipboard"  style="    margin-left: 74px;
+        font-size: 36px;
+        color: #003f6c;"></i></p>
+        <div *ngIf="IsCoppied">
+          <ngb-alert [dismissible]="false" type="success">
+            Url Coppied successfully  ! Ctrl+v to past into your Url
+          </ngb-alert>
+        </div>
+    
+       
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-dismiss="modal" #dismismodal>Close</button>
+  
+ </div>
+</ng-template>

@@ -1,0 +1,132 @@
+
+<div class="container-fluid">
+
+  <!-- start page title -->
+  <app-page-title title="Ticket Detail" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+               
+
+                <div class="mt-4">
+                    <h5 class="font-size-14 mb-3">Ticket No #{{retriveticketdata.ticketinfo.ticketId}} </h5>
+                    <div class="product-desc">
+
+                      <ul ngbNav (select)="1" #nav="ngbNav" class="nav nav-tabs nav-tabs-custom" [activeId]="1">
+
+                        <li [ngbNavItem]="1">
+                          <a ngbNavLink class="nav-link" id="desc-tab">Description</a>
+                          <ng-template ngbNavContent>
+                            <div class="tab-content border border-top-0 p-4">
+                              <div class="tab-pane fade show active" id="desc">
+                                <div class="row">
+                                    
+                                    <div class="col-sm-9 col-md-10">
+                                        <div class="text-muted p-2">
+                                         <p>{{retriveticketdata.ticketinfo.description}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </ng-template>
+                        </li>
+
+                        <li [ngbNavItem]="2">
+                          <a ngbNavLink class="nav-link" id="specifi-tab">Details</a>
+                          <ng-template ngbNavContent>
+                            <div class="tab-content border border-top-0 p-4">
+                              <div class="tab-pane fade show" id="specifi">
+                                <div class="table-responsive">
+                                    <table class="table table-nowrap mb-0">
+                                        <tbody>
+                                           
+                                                <th scope="row" style="width: 20%;">Number of Conditions</th>
+                                                <td>{{retriveticketdata.ticketinfo.cond}}</td>
+                                           
+                                            <tr>
+                                                <th scope="row">Priority</th>
+                                                <td>{{retriveticketdata.ticketinfo.priority}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Quntity</th>
+                                                <td>{{retriveticketdata.ticketinfo.qty}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Created</th>
+                                                <td>{{retriveticketdata.ticketinfo.creationDate |date}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Status</th>
+                                                <td>{{retriveticketdata.ticketinfo.status}}</td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                              </div>
+                          </div>
+
+                          </ng-template>
+                        </li>
+                      </ul>
+                      <div [ngbNavOutlet]="nav"></div>
+
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h5 class="font-size-14 mb-3">Replies : </h5>
+
+                    <div class="border p-4 rounded">
+                        <div class="border-bottom pb-3" *ngFor="let item of Ticketreplies;let i = index">
+                          
+                            <div class="btn btn-success mb-2"><i class="mdi mdi-star"></i> {{item.replyFromUserName}}   </div>
+                            <p  style="float:right;">{{item.dateTime|date: 'short'}}</p>
+                            <p class="text-muted mb-4" style="font-size: 18px;">{{item.message}}</p>
+                            <p  ngbTooltip="download" *ngIf="item.documentPath!=null" style="float: right;"> <a style="float: right;" [href]="imagebaseurl+item.documentPath"  [download]="item.documentPath"><i class="uil-cloud-download" style="float: right;font-size: 30px;"></i></a></p>
+                  
+                            <br>
+                        </div>
+
+                     
+
+                    </div>
+                    <div class="card">
+                      <div >
+                        <div class="card-header header-elements-inline">
+                           <h5 class="card-title">Reply</h5>
+                           <div class="header-elements">
+                              <a ></a>
+                           </div>
+                        </div>
+                        <div class="card-body">
+                           <div class="mb-3">
+                              <div id="add-comment" style="display: none;">
+                              </div>
+                              <div class="">
+                                 <div class="">
+                                    <textarea [(ngModel)]="Message" placeholder="Enter Message" class="form-control"></textarea> 
+                                 </div>
+                                 <br><input  class="btn btn-success uniform-uploader" type="file"  (change)="onFileChange($event)" (click)="onFileChange($event)"  multiple="false"  class="form-control">
+                              </div>
+                           </div>
+                           <div class="text-right">
+                              <button type="button" (click)="SubmitReply()" class="btn btn-info"><i class="icon-plus22 mr-1"></i>Reply Now</button>
+                           </div>
+                        </div>
+                     </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- end row -->
+
+</div> <!-- container-fluid -->
+
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "pacman" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

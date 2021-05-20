@@ -1,0 +1,172 @@
+<div class="container-fluid">
+  <app-page-title
+    title="Emails"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+
+
+
+    <!-- Single line -->
+    <div class="card">
+<div>
+  </div>  
+
+
+  <!-- Inner container -->
+  <div class="d-md-flex align-items-md-start">
+
+  
+
+
+    <!-- Right content -->
+    <div class="flex-fill overflow-auto">
+
+        <!-- Single mail -->
+        <div class="">
+
+          <!-- Action toolbar -->
+          <div class="navbar navbar-light bg-light navbar-expand-lg border-bottom-0 py-lg-2 rounded-top">
+            <div class="text-center d-lg-none w-100">
+              <button type="button" class="navbar-toggler w-100 h-100" data-toggle="collapse" data-target="#inbox-toolbar-toggle-write">
+                <i class="icon-circle-down2"></i>
+              </button>
+            </div>
+
+            <div class="navbar-collapse text-center text-lg-left flex-wrap collapse" id="inbox-toolbar-toggle-write">
+
+              <div class="mt-3 mt-lg-0 mr-lg-3">
+                <h1>Eamil Senders</h1>
+            </div>
+
+
+            
+
+              <div class="navbar-text ml-lg-auto" style="float: right;">{{date   | date: 'medium'}}</div>
+
+      
+            </div>
+          </div>
+          <!-- /action toolbar -->
+
+
+          <!-- Mail details -->
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+               
+                <tr>
+                  <td class="align-top py-0">
+                    <div class="py-2 mr-sm-3">   <input type="text" [(ngModel)]="Subject" class="form-control py-2 px-0 border-0 rounded-0" placeholder="Add subject">
+                    </div>
+                </td>
+                  <td class="align-top py-0">
+
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+          </div>
+          <!-- /mail details -->
+
+
+          <!-- Mail container -->
+          <div class="container card-body p-0">
+            <div class="overflow-auto mw-100">
+              
+           
+          <!-- /mail container -->
+
+
+          <!-- Attachments -->
+          <div class="card-body border-top">
+            <h6 class="mb-0">Message</h6>
+
+            <ul class="list-inline mb-0">
+              <div class="row">
+                  <div class="col-md-12">
+                    <textarea style="background-color: #eeeded;" rows="10" [(ngModel)]="Message" class="form-control"></textarea>
+                   
+                   <br> <div class="text-right">
+                      <button type="submit" (click)="SendMessage()" class="btn btn-primary">Send Email <i class="icon-paperplane ml-2"></i></button>
+                    </div>
+                    <br>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group row">
+       
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" >
+                        <div >
+                         
+                          <h2>My Contact List({{contactlist.length}})</h2>
+                          <div class="row">
+                            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
+                              <label><span>Filter:</span> <input type="search" c [(ngModel)]="term" class="form-control" placeholder="Type to filter..." aria-controls="DataTables_Table_0"></label>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
+                              <label style="float:right">
+                                <span>Show:</span> 
+                                <select  class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectedValue">
+                                  <option *ngFor="let quantity of data" [ngValue]="quantity">{{quantity}}</option>
+                            </select>
+                                
+                            </label>   </div>
+                      </div>
+                        
+                
+                          <div class="table-responsive">
+                            <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 datatables">
+                              <thead>
+                               
+                                <tr class="bg-blue">
+                                  <th><input   type="checkbox"(click)="Addallmails()"></th>
+                               
+                               
+                                  <th (click)="Sort('name')" class="sorting" >Name</th>
+                                         <th (click)="Sort('email')" class="sorting" >Email</th>
+                                  <th (click)="Sort('phone')" class="sorting" >Contact</th>
+                           
+                                  <th (click)="Sort('address')" class="sorting" >Address</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr  *ngFor="let item of contactlist |filter:term|orderBy:key :reverse|paginate:{itemsPerPage:selectedValue,currentPage:p}; let i=index;">
+                                  <th><input *ngIf="!checked;else chk" (click)="Addmail(item.contact.contactId,item.contact.email)" type="checkbox">
+                                  <ng-template #chk>
+                                    <input  (click)="Addmail(item.contact.contactId,item.contact.email)" type="checkbox" checked>
+                                  </ng-template>
+                                  </th>
+                                  <th>{{item.contact.name}}</th>
+                                  <th><a href="mailto:{{item.contact.email}}" ><i class="bx uil-envelope" style="padding-right:10px ;"></i>{{item.contact.email}} </a></th>
+                                 
+                                  <th>   <a href="tel:{{item.contact.phone}}" ><i class="fas fa-phone" style="padding-right:10px ;"></i>{{item.contact.phone}}</a></th>
+                                 <th>{{item.contact.address}}</th>
+                                </tr>
+                            
+                              </tbody>
+                            </table>
+                            <pagination-controls (pageChange)="p=$event"></pagination-controls> 
+                          </div>
+                        </div>
+                   </div>
+                    </div>
+                  </div>
+
+              </div>
+             
+            </ul>
+          </div>
+          <!-- /attachments -->
+
+        </div>
+        <!-- /single mail -->
+
+    </div>
+    <!-- /right content -->
+
+  </div>
+  <!-- /inner container -->
+
+</div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "pacman" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

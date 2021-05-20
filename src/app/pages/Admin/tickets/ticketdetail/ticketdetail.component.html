@@ -1,0 +1,100 @@
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0">Ticket</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item active"><a href="javascript: void(0);">Tickets</a></li>
+                        <li class="breadcrumb-item ">Detail</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+    
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <h4 class="card-title">Ticket Detail</h4>
+                  
+                    <div class="row">
+                        <div class="col-xl-8">
+                            <div class="card">
+                                <div class="card-body">
+                  
+                                    <h4 class="card-title"  style="text-align: center;">Ticket Detail</h4>
+                                  
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div>
+                                                <h5 class="mt-0 font-size-14">About Ticket</h5>
+                                                <hr>
+                                                  <h5>Ticket No :{{ticketdata.ticketinfo.ticketId}} <span style="float: right;">Current Status:{{ticketdata.ticketinfo.status}}</span> </h5>
+                                                 
+                                                 <br>
+                                                  <p>Ticket Name :{{ticketdata.ticketType.ticketName}}  <span  style="float: right;">Replies({{ticketdata.perticketreplies}})</span></p>
+                                                
+                                                  <p>Asking Price :<span style="font-weight: bold;font-size:16 ;">${{ticketdata.ticketinfo.askingPrice}} </span><span  style="float: right;">Offer Price :<span style="font-weight: bold;font-size:16 ;">${{ticketdata.ticketinfo.offerPrice}}</span></span></p>
+                                                
+                                                  <p>Quntity :{{ticketdata.ticketinfo.qty}} <span  style="float: right;">priority :No</span></p>
+                                                  <p>Conditions:{{ticketdata.ticketinfo.cond}}</p>
+                                                  <p>Notes:{{ticketdata.ticketinfo.notes}}</p>
+                                                  <p>Description:{{ticketdata.ticketinfo.description}}</p>
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                          <div class="card">
+                              <div class="card-body">
+                  
+                                  <h4 class="card-title" style="text-align: center;">User Detail</h4>
+                                
+                                  <div class="row">
+                                     
+                                      <div class="col-12">
+                                          <div>
+                                              <h5 class="mt-0 font-size-14">User Information</h5>
+                                              <hr>
+                                              <p style="font-size: 16px;">Name:<span style="font-weight: bold;">{{ticketdata.ticketinfo.customer.name}}</span></p>
+                                              <p style="font-size: 16px;">Contact No: <span style="font-weight: bold;">{{ticketdata.ticketinfo.customer.contact}}</span></p>
+                                              <p style="font-size: 16px;">Email: <span style="font-weight: bold;">{{ticketdata.ticketinfo.customer.email}}</span></p>
+                                          </div>
+                                      </div>
+                                      <div class="col-12">
+                                        <div>
+                                            <h5 class="mt-0 font-size-14">Company Information</h5>
+                                            <hr>
+                                            <p style="font-size: 16px;">Name:<span style="font-weight: bold;">{{ticketdata.ticketinfo.customer.name}}</span></p>
+                                            <p style="font-size: 16px;">Contact No: <span style="font-weight: bold;">{{ticketdata.ticketinfo.customer.contact}}</span></p>
+                                            <p style="font-size: 16px;">Email: <span style="font-weight: bold;">{{ticketdata.ticketinfo.customer.email}}</span></p>
+                                        </div>
+                                    </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      
+                    </div> <!-- end row -->
+                </div>
+            </div>
+        </div>
+
+      
+    </div> <!-- end row -->
+
+
+</div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "pacman" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

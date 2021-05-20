@@ -1,0 +1,98 @@
+<div class="container-fluid">
+  <app-page-title title="Quotations" ></app-page-title>
+  <div class="row" >
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Ticket Quotations</h4>
+          <p class="card-sub-title">
+            Ticket Quotations Detail
+          </p>
+          <div class="row mb-md-2">
+            <div class="col-sm-12 col-md-6">
+              <div class="dataTables_length" id="tickets-table_length"><label
+                  class="d-inline-flex align-items-center">Show
+                
+                  <select  id="exampleFormControlSelect1" [(ngModel)]="selectedValue" aria-controls="tickets-table" 
+                  class="form-control form-control-sm mx-2">
+                    <option *ngFor="let quantity of data" [ngValue]="quantity">{{quantity}}</option>
+                  </select> entries</label></div>
+            </div>
+            <!-- Search -->
+            <div class="col-sm-12 col-md-6">
+              <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
+                  class="d-inline-flex align-items-center">Search:
+                  <input type="text" name="searchTerm" class="form-control form-control-sm ms-2"
+                    aria-controls="tickets-table" [(ngModel)]="term"></label></div>
+            </div>
+            <!-- End search -->
+          </div>
+          <!-- Table -->
+          <div class="table-responsive">
+            <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 datatables">
+              <thead>
+                <tr>
+              
+                    <th>#</th>
+                    <th  (click)="Sort('ticketinfo.customer.name')" >Quotation No#</th>
+                   
+                    <th  (click)="Sort('ticketinfo.ticketId')" >Quantity</th>
+                   
+                    <th (click)="Sort('ticketinfo.cond')" >No Of Tickets </th>
+                    
+
+                    <th (click)="Sort('ticketinfo.creationDate')" >CREATED DATE </th>
+                   <th>Actions</th>
+ 
+              </thead>
+  
+              <tbody   *ngFor="let item of myqutations|filter:term|orderBy:key :reverse|paginate:{itemsPerPage:selectedValue,currentPage:p}; let i=index;" >
+                <tr >
+                  <td>{{i+1}}</td>
+                  
+                 
+                  <td >{{item.qoutation.quotationId}}</td>
+                  <td >{{item.quantity}}</td>
+                  <td >{{item.quoteditems.length}}</td>
+                 
+              
+               
+                  <td>{{item.qoutation.dateTime| date}}</td>
+      
+             <td><i class="uil-print"   style="font-size: 24px;margin-right: 10px;" (click)="PrintQutation(item.qoutation.quotationId)" ngbTooltip="Print"  ></i > 
+            
+            
+              <a  style="font-size: 24px;"  ><i class="uil-cloud-download" ngbTooltip="download"></i></a>
+            </td>   </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- End table -->
+          <div class="row justify-content-md-between align-items-md-center mt-2">
+            <div class="col-sm-12 col-md-5">
+              
+            </div>
+            <!-- Pagination -->
+            <div class="col-sm-12 col-md-5">
+              <div class="text-md-end float-md-end pagination-rounded">
+                <!-- <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+                </ngb-pagination> -->
+ <pagination-controls (pageChange)="p=$event" aria-label="Default pagination"></pagination-controls> 
+   </div>
+            </div>
+            <!-- End Pagination -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+

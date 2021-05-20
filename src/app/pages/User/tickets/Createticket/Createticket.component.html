@@ -1,0 +1,130 @@
+<div  id="modal_theme_info" class="modal   fade" tabindex="-1">
+  <div class="modal-full-height  modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-info">
+        <h6 class="modal-title" style="font-weight: bold;font-size: 15px;">Create Ticket</h6>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body">
+      
+
+          <div >
+           
+            <form [formGroup]="ticketForm">
+              <fieldset class="mb-3">
+              
+
+                <div class="form-group row">
+                  <label class="col-form-label col-lg-2">Select Funnel <sup style="color: red;">*</sup> </label>
+                  <div class="col-lg-10">
+                 <select  style="font-size: 15px;font-weight: bold;" class="form-control"  #mySelect
+                 (change)='onOptionsSelected(mySelect.value)'>
+                   <option *ngFor="let item of funneldata" [value]="item.funnel.funnerlId">{{item.funnel.funnelName}}  </option>
+                   
+                 </select>
+                  </div>
+                </div> 
+              
+                
+                <div class="form-group row">
+                  <label class="col-form-label col-lg-2">Select Ticket <sup style="color: red;">*</sup> </label>
+                  <div class="col-lg-10">
+                 <select formControlName="TicketTypeId" style="font-size: 15px;font-weight: bold;" class="form-control"  #Select
+                 (change)='ontypeSelected(Select.value)'>
+                   <option *ngFor="let item of tickettypes" [value]="item.ticketTypeId">{{item.ticketName}}  </option>
+                   
+                 </select>
+                  </div>
+                </div> 
+             
+             
+          
+            
+                <!-- <div class="form-group row">
+                  <label class="col-form-label col-lg-2">PIN <sup style="color: red;">*</sup> </label>
+                  <div class="col-lg-10">
+                    <input type="number" formControlName="PIN" placeholder="PIN" class="form-control">
+                  </div>
+                </div> -->
+                <!-- <div class="form-group row"*ngIf="rfq">
+                  <label class="col-form-label col-lg-2">RFQnum <sup style="color: red;">*</sup> </label>
+                  <div class="col-lg-10">
+                    <input type="number"  formControlName="RFQnum" placeholder="RFQnum" class="form-control">
+                  </div>
+                </div> -->
+                <!-- <div class="form-group row"*ngIf="offer">
+                  <label class="col-form-label col-lg-2">Offernum <sup style="color: red;">*</sup> </label>
+                  <div class="col-lg-10">
+                    <input type="number" formControlName="Offernum" placeholder="Offernum" class="form-control">
+                  </div>
+                </div>
+               -->
+
+                <div class="form-group row">
+                  <label class="col-form-label col-lg-2">Conditions <sup style="color: red;">*</sup> </label>
+                  <div class="col-lg-10">
+                    <input type="text"  formControlName="Cond" placeholder="Please Enter The Conditions" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-form-label col-lg-2">Qty <sup style="color: red;">*</sup> </label>
+                  <div class="col-lg-10">
+                    <input type="number" (keypress)="keyPress($event)" formControlName="Qty" placeholder="Qty of Tickets" class="form-control">
+                    <input type="hidden" formControlName="TicketTypeId">
+                  </div>
+                </div>
+                <div class="form-group row" *ngIf="askingprice">
+                  <label class="col-form-label col-lg-2">AskingPrice <sup style="color: red;">*</sup> </label>
+                  <div class="col-lg-10">
+                    <input type="number" formControlName="AskingPrice" (keypress)="keyPress($event)" placeholder="AskingPrice" class="form-control">
+                  </div>
+                </div>
+             
+                <div class="form-group row"*ngIf="offerprice">
+                  <label class="col-form-label col-lg-2">OfferPrice <sup style="color: red;">*</sup> </label>
+                  <div class="col-lg-10">
+                    <input type="number" (keypress)="keyPress($event)"  formControlName="OfferPrice" placeholder="OfferPrice" class="form-control">
+                  </div>
+                </div>
+                <!-- <div class="form-group row"*ngIf="quotenum">
+                  <label class="col-form-label col-lg-2">QuoteNumber <sup style="color: red;">*</sup> </label>
+                  <div class="col-lg-10">
+                    <input type="number" formControlName="QuoteNumber" placeholder="QuoteNumber" class="form-control">
+                  </div>
+                </div> -->
+                <div class="form-group row">
+                  <label class="col-form-label col-lg-2">NOTES & INQUERIES  <sup style="color: red;">*</sup> </label>
+                  <div class="col-lg-10">
+                    <input type="text" formControlName="Notes"   placeholder="NOTES &INQUERIES" class="form-control">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-form-label col-lg-2">Description <sup style="color: red;">*</sup> </label>
+                  <div class="col-lg-10">
+                    <textarea formControlName="Description" placeholder="Description About Ticket" class="form-control"></textarea>
+                
+                  </div>
+                </div>   
+               
+              </fieldset>
+
+             
+
+            
+
+          
+            </form>
+          </div>
+     
+
+      <div class="modal-footer">
+        <br>
+        <br>
+        <button type="button" class="btn btn-link" data-dismiss="modal" #dismismodal>Close</button>
+        <button type="button" class="btn bg-info"(click)="saveTicket()">Confirm Ticket</button>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor = "rgba(214,236,242,0.8)" size = "large" color = "#0911e7" type = "timer" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

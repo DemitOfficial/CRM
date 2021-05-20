@@ -1,0 +1,108 @@
+<div class="container-fluid">
+  <!-- start page title -->
+  <app-page-title title="Dashboard" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <!-- end page title -->
+
+  <div class="row">
+      <div class="col-md-6 col-xl-3">
+          <div class="card">
+              <div class="card-body">
+                  <div class="float-end mt-2">
+                      <div id="total-revenue-chart">
+                          <apx-chart class="apex-charts" dir="ltr" [series]="revenueColumnChart.series"
+                              [chart]="revenueColumnChart.chart" [plotOptions]="revenueColumnChart.plotOptions"
+                              [grid]="revenueColumnChart.grid" [tooltip]="revenueColumnChart.tooltip"
+                              [stroke]="revenueColumnChart.stroke" [dataLabels]="revenueColumnChart.dataLabels"
+                              [colors]="revenueColumnChart.colors" [fill]="revenueColumnChart.fill">
+                          </apx-chart>
+                      </div>
+                  </div>
+                  <div>
+                      <h4 class="mb-1 mt-1"><span data-plugin="counterup">{{DashboardData?.totaltickets}}</span></h4>
+                      <p class="text-muted mb-0">Total Tickets</p>
+                  </div>
+                  <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i
+                              class="mdi mdi-arrow-up-bold me-1"></i></span> 
+                  </p>
+              </div>
+          </div>
+      </div> <!-- end col-->
+
+      <div class="col-md-6 col-xl-3">
+          <div class="card">
+              <div class="card-body">
+                  <div class="float-end mt-2">
+                      <div id="orders-chart">
+                          <apx-chart class="apex-charts" dir="ltr" [series]="orderRadialBarChart.series"
+                              [chart]="orderRadialBarChart.chart" [plotOptions]="orderRadialBarChart.plotOptions"
+                              [colors]="orderRadialBarChart.colors" [labels]="orderRadialBarChart.labels">
+                          </apx-chart>
+                      </div>
+                  </div>
+                  <div>
+                      <h4 class="mb-1 mt-1"><span data-plugin="counterup">0</span></h4>
+                      <p class="text-muted mb-0">Open Tickets</p>
+                  </div>
+                  <p class="text-muted mt-3 mb-0"><span class="text-danger me-1"><i
+                              class="mdi mdi-arrow-down-bold me-1"></i></span> 
+                  </p>
+              </div>
+          </div>
+      </div> <!-- end col-->
+
+      <div class="col-md-6 col-xl-3" >
+          <div class="card">
+              <div class="card-body">
+                  <div class="float-end mt-2">
+                      <div id="customers-chart">
+                          <apx-chart class="apex-charts" dir="ltr" [series]="customerRadialBarChart.series"
+                              [chart]="customerRadialBarChart.chart"
+                              [plotOptions]="customerRadialBarChart.plotOptions"
+                              [colors]="customerRadialBarChart.colors" [labels]="customerRadialBarChart.labels">
+                          </apx-chart>
+                      </div>
+                  </div>
+                  <div>
+                      <h4 class="mb-1 mt-1"><span data-plugin="counterup">0</span></h4>
+                      <p class="text-muted mb-0">New Replies</p>
+                  </div>
+                  <p class="text-muted mt-3 mb-0"><span class="text-danger me-1"><i
+                              class="mdi mdi-arrow-down-bold me-1"></i></span> 
+                  </p>
+              </div>
+          </div>
+      </div> <!-- end col-->
+
+      <div class="col-md-6 col-xl-3" [routerLink]="['/user/quotations']">
+
+          <div class="card">
+              <div class="card-body">
+                  <div class="float-end mt-2">
+                      <div id="growth-chart">
+                          <apx-chart class="apex-charts" dir="ltr" [series]="growthColumnChart.series"
+                              [chart]="growthColumnChart.chart" [plotOptions]="growthColumnChart.plotOptions"
+                              [grid]="growthColumnChart.grid" [tooltip]="growthColumnChart.tooltip"
+                              [stroke]="growthColumnChart.stroke" [dataLabels]="growthColumnChart.dataLabels"
+                              [colors]="growthColumnChart.colors" [fill]="growthColumnChart.fill">
+                          </apx-chart>
+                      </div>
+                  </div>
+                  <div>
+                      <h4 class="mb-1 mt-1"> <span data-plugin="counterup">{{DashboardData?.quatations||0}}</span></h4>
+                      <p class="text-muted mb-0">Quotations</p>
+                  </div>
+                  <p class="text-muted mt-3 mb-0"><span class="text-success me-1"><i
+                              class="mdi mdi-arrow-up-bold me-1"></i></span> 
+                  </p>
+              </div>
+          </div>
+      </div> <!-- end col-->
+  </div> <!-- end row-->
+
+
+ 
+
+</div> <!-- container-fluid -->
+<!-- <notifier-container></notifier-container> -->
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "pacman" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

@@ -1,0 +1,135 @@
+
+<div class="container-fluid">
+  <div class="topnav">
+
+      <nav class="navbar navbar-light navbar-expand-lg topnav-menu">
+
+          <div class="collapse navbar-collapse" id="topnav-menu-content">
+              <ul class="navbar-nav active">
+
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">
+                          <i class="uil-home-alt me-2"></i> CRM
+                      </a>
+                  </li>
+
+                  
+
+              </ul>
+          </div>
+      </nav>
+  </div>
+</div>
+<div class="container-fluid">
+
+  <div >
+    <br>
+    <br>
+     
+      <!-- end page title -->
+      
+      <div class="row mb-4">
+        <div class="col-xl-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="text-center">
+                <div class="dropdown float-end" ngbDropdown>
+                  <a class="text-body dropdown-toggle font-size-18" href="javascript:void(0)" role="button"
+                    ngbDropdownToggle>
+                    <i class="uil uil-ellipsis-v"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+                    
+                    <a class="dropdown-item" href="javascript:void(0)">Remove</a>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div>
+                  <img [src]="imagebaseurl+CompanytData.companies.profileImagePath"  alt="" class="avatar-lg rounded-circle img-thumbnail" />
+                </div>
+                <h5 class="mt-3 mb-1">{{CompanytData.companies.comapnyName}}</h5>
+             
+      
+         
+              </div>
+      
+              <hr class="my-4" />
+      
+              <div class="text-muted">
+              
+                <div class="table-responsive mt-4">
+                  <div>
+                    <p class="mb-1">Name :</p>
+                    <h5 class="font-size-16">{{CompanytData.companies.comapnyName}}</h5>
+                  </div>
+                  <div class="mt-4">
+                    <p class="mb-1">Address :</p>
+                    <a  class="nav-link" style="color: black;">
+                     
+                      {{CompanytData.companies.address}}
+                    </a>
+                  </div>
+               
+               
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="col-xl-8">
+          <div class="card mb-0">
+       
+          <!-- Tab content -->
+    
+            <div >
+              <div  >
+                <div style="padding: 25px;">
+                  <div class="Container">
+                    <h5 class="font-size-16 mb-4">Employees</h5>
+                    <div class="table-responsive">
+                      <table class="table mb-0">
+                         
+                          <thead>
+                              <tr>
+                                  <th>#</th>
+                                  <th> Name</th>
+                                  <th>Email</th>
+                                  <th>Contact No</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr  *ngFor="let item of customers;let i=index;">
+                                  <th scope="row">{{i+1}}</th>
+                                  <td>  <a > {{item?.name}}</a></td>
+                                  <td><a href="mailto:{{item.email}}" ><i class="bx uil-envelope" style="padding-right:10px ;"></i>{{item?.email}} </a></td>
+                                  <td><a href="tel:{{item.phone}}" ><i class="fas fa-phone" style="padding-right:10px ;"></i>{{item?.contact}}</a></td>
+                              </tr>
+                            
+                          </tbody>
+                      </table>
+                
+                  </div>
+                  
+                  </div>
+      
+                 
+                </div>
+              </div>
+            </div>
+         
+      
+        
+        </div>
+      </div>
+    
+    </div>
+    
+   
+</div>
+
+  </div>
+
+
+
+

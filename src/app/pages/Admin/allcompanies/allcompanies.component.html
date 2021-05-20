@@ -1,0 +1,297 @@
+<div class="container-fluid">
+  <app-page-title title="Companies" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">All Registered Companies</h4>
+         
+          <div class="row mb-md-2">
+            <div class="col-sm-12 col-md-12">
+            
+              <div class="dataTables_length" id="tickets-table_length"><label
+                  class="d-inline-flex align-items-center">Show
+               
+                  <select  id="exampleFormControlSelect1" [(ngModel)]="selectedValue" aria-controls="tickets-table" 
+                  class="form-control form-control-sm mx-2">
+                    <option *ngFor="let quantity of data" [ngValue]="quantity">{{quantity}}</option>
+                  </select> entries</label></div>
+            </div>
+            <!-- Search -->
+          
+            <div class="col-sm-12 col-md-12">
+        
+              <p class="card-sub-title">
+               
+                  <a  style="float: right;" class="btn btn-info" (click)="Adddata(Addmodal)" > <i class="bx bx-plus-medical"></i> Add Company </a>
+              <br>
+                </p>
+              <br>
+            </div>
+            <div class="col-sm-12 col-md-12">
+             
+              <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
+                  class="d-inline-flex align-items-center">Search:
+                  <input type="text" name="searchTerm" class="form-control form-control-sm ms-2"
+                    aria-controls="tickets-table" [(ngModel)]="term"></label></div>
+            </div>
+            <!-- End search -->
+          </div>
+          <!-- Table -->
+          <div class="table-responsive">
+            <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 datatables">
+              <thead>
+                <tr>
+                  <th sortable="i" (click)="Sort('i')">#</th>
+                  <th sortable="companies.name" (click)="Sort('name')">Name</th>
+                  <th sortable="companies.address" (click)="Sort('name')">Address</th>
+                  <th  sortable="companies.email" (click)="Sort('email')" >Image</th>
+            
+                  <th>Registered Users</th>
+                  <th>Action</th>
+                  <!-- <th sortable="age" (sort)="onSort($event)">Age</th> -->
+                
+                </tr>
+              </thead>
+              <tbody *ngFor="let item of UsersList|filter:term|orderBy:key :reverse|paginate:{itemsPerPage:selectedValue,currentPage:p}; let i=index;" >
+                <tr >
+                      <td>{{i+1}}</td>
+                  <td>
+                    {{item.companies?.comapnyName}}
+                
+                  </td>
+                  <td>
+                    {{item.companies?.address}}
+                
+                  </td>
+                  <td *ngIf="item.companies.profileImagePath!==null"><img [src]="imagebaseurl+item.companies.profileImagePath" style="height: 40px;" /></td>
+                  <td *ngIf="item.companies.profileImagePath==null"><img src="assets/images.jpg" style="height: 40px;" /></td>
+                
+                  <td>
+                    {{item.customers.length}}
+                  </td>
+            <td>
+              <a class="btn btn-outline-success btn-sm edit" (click)="CompanyDetails(Details,item.customers)" title="Details" >
+                <i class="uil-users-alt"></i>
+            </a >
+              <a class="btn btn-outline-secondary btn-sm edit" style="margin-left: 5px;" (click)="scrollModal(scrollDataModal,item.companies.companyId,'Edit')" title="Edit">
+                <i class="fas fa-pencil-alt" title="Edit"></i>
+            </a>
+         
+            <!-- <a class="btn btn-outline-danger btn-sm edit" (click)="scrollModal(scrollDataModal,item.companies.companyId,'remove')" title="Remove" style="margin-left: 5px;">
+              <i class="uil-trash-alt"></i>
+          </a > -->
+          <a  class="btn btn-outline-danger btn-sm edit"class="btn btn-outline-info btn-sm edit" (click)="CompanyInfo(item)" title="View Profile" style="margin-left: 5px;">
+            <i class="uil-eye"></i>
+        </a >
+          <a class="btn btn-outline-danger btn-sm edit"(click)="Createlink(Create1,item.companies.companyId)" title="Link" style="margin-left: 5px;">
+              <i class="uil-share-alt" title="Share With Others"></i>
+          </a >
+      
+              
+            </td>                 
+                
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- End table -->
+          <div class="row justify-content-md-between align-items-md-center mt-2">
+            <div class="col-sm-12 col-md-5">
+              
+            </div>
+            <!-- Pagination -->
+            <div class="col-sm-12 col-md-5">
+              <div class="text-md-end float-md-end pagination-rounded">
+                <!-- <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+                </ngb-pagination> -->
+ <pagination-controls (pageChange)="p=$event" aria-label="Default pagination"></pagination-controls> 
+   </div>
+            </div>
+            <!-- End Pagination -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #scrollDataModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">{{operationname}}</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+
+    </button>
+  </div>
+  <div class="modal-body">
+    <fieldset class="mb-3">
+               
+ 
+      <div class="form-group row">
+        <label class="col-form-label col-lg-2">Company Name <sup style="color: red;">*</sup> </label>
+       <div class="col-lg-10">
+          <input type="text" [(ngModel)]="comapnyName"   placeholder="Company Name" class="form-control">
+      
+           </div>
+      </div>
+     
+
+      <div class="form-group row">
+        <label class="col-form-label col-lg-2">Address <sup style="color: red;">*</sup> </label>
+        <div class="col-lg-10">
+     
+          <textarea [(ngModel)]="address" placeholder="Address" class="form-control"></textarea>
+        </div>
+        </div>
+ 
+      <div class="form-group row"  *ngIf="Image!==null"  style="margin-top: 10px;">
+        <label class="col-form-label col-lg-2">Image <sup style="color: red;">*</sup> </label>
+        <div class="col-lg-10">
+        <img [src]="Image" style="height: 100px;width: 100px;" />
+      </div>  
+      </div>    
+      <div class="form-group row"*ngIf="Update==true" style="margin-top: 10px;">
+       <label class="col-form-label col-lg-2"> <sup style="color: red;">*</sup> </label>
+       <div class="col-lg-10">
+          <div class="custom-dropzone" multiple="false" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+             <ngx-dropzone-label>
+               <div>
+                 <p>Upload New  Image</p>
+               </div>
+             </ngx-dropzone-label>
+              <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+               <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+             </ngx-dropzone-image-preview> 
+           </div> 
+       </div>
+     </div>   
+ 
+     
+    </fieldset>
+     </div>
+  <div class="modal-footer">
+
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)=" UpdateConfirm()" *ngIf="Update==true">Save Changes</button>
+    <button type="button" class="btn btn-danger" (click)="DeleteCompany()" *ngIf="Del==true">Remove</button>
+  </div>
+</ng-template>
+<ng-template #Addmodal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Registered a New Company</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+
+    </button>
+  </div>
+  <div class="modal-body">
+    <fieldset class="mb-3">
+               
+ 
+      <div class="form-group row">
+        <label class="col-form-label col-lg-2">Company Name <sup style="color: red;">*</sup> </label>
+       <div class="col-lg-10">
+          <input type="text" [(ngModel)]="comapnyName"   placeholder="Company Name" class="form-control">
+      
+           </div>
+      </div>
+     
+
+      <div class="form-group row">
+        <label class="col-form-label col-lg-2">Address <sup style="color: red;">*</sup> </label>
+        <div class="col-lg-10">
+          <textarea [(ngModel)]="address" placeholder="Address" class="form-control"></textarea>
+      
+        </div>
+      </div>   
+      <div class="form-group row"  style="margin-top: 20px;">
+       <label class="col-form-label col-lg-2"> <sup style="color: red;">*</sup> </label>
+       <div class="col-lg-10">
+          <div class="custom-dropzone" multiple="false" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+             <ngx-dropzone-label>
+               <div>
+                 <p>Upload Image</p>
+               </div>
+             </ngx-dropzone-label>
+              <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+               <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+             </ngx-dropzone-image-preview> 
+           </div> 
+       </div>
+     </div>   
+ 
+     
+    </fieldset>
+     </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="Savecompany()">Save changes</button>
+  </div>
+</ng-template>
+
+<ng-template #Details let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Company Employees Detail</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive">
+      <table class="table mb-0">
+         
+          <thead>
+              <tr>
+                  <th>#</th>
+                  <th> Name</th>
+                  <th>Email</th>
+                  <th>Contact No</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let item of Userslist;let i=index;">
+                  <th scope="row">{{i+1}}</th>
+                  <td>  <a (click)="getuserinfo(item.userId)" > {{item?.name}}</a></td>
+                  <td><a href="mailto:{{item.email}}" ><i class="bx uil-envelope" style="padding-right:10px ;"></i>{{item.email}} </a></td>
+                  <td><a href="tel:{{item.phone}}" ><i class="fas fa-phone" style="padding-right:10px ;"></i>{{item.contact}}</a></td>
+              </tr>
+            
+          </tbody>
+      </table>
+
+  </div>
+     </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="Savecompany()">Save changes</button>
+  </div>
+</ng-template>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "pacman" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+<ng-template #Create1 let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Shareable link </h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+
+    </button>
+  </div>
+
+  <div class="modal-body">
+<div class="container">
+  <p>{{shareablelink}}   <i class="uil-copy"  (click)="copyMessage()" ngbTooltip="Copy to Clipboard"  style="    margin-left: 74px;
+    font-size: 36px;
+    color: #003f6c;"></i></p>
+    <div *ngIf="IsCoppied">
+      <ngb-alert [dismissible]="false" type="success">
+        Url Coppied successfully  ! Ctrl+v to past into your Url
+      </ngb-alert>
+    </div>
+
+   
+</div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-dismiss="modal" #dismismodal>Close</button>
+  
+ </div>
+</ng-template>

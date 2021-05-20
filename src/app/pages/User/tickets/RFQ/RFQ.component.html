@@ -1,0 +1,353 @@
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "pacman" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+<div class="container-fluid">
+
+  <!-- start page title -->
+  <div class="row">
+      <div class="col-12">
+          <div class="page-title-box d-flex align-items-center justify-content-between">
+              <h4 class="mb-0">  Tickets</h4>
+
+              <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                      <li class="breadcrumb-item"><a href="javascript: void(0);">Ticket</a></li>
+                      <li class="breadcrumb-item active">RFQ  Tickets </li>
+                  </ol>
+              </div>
+
+          </div>
+      </div>
+  </div>
+  <!-- end page title -->
+
+  <div class="row">
+      <div class="col-md-2">
+          
+              <button (click)="Createcontact(Create)" type="button" class="btn btn-success waves-effect waves-light mb-3"><i class="mdi mdi-plus me-1"></i> Add Ticket</button>
+             
+         
+      </div>
+      <div class="col-md-2">
+        
+         <button (click)="getticketinfo()"  type="button" class="btn btn-info waves-effect waves-light mb-3   "><i class="
+        uil  uil-rotate-360"></i> Refresh</button>
+       
+           
+     
+    </div>
+    
+  </div>
+
+  <div class="row">
+      <div class="col-lg-12">
+          
+          <div class="table">
+              <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="DataTables_Table_0_length">
+
+                  </div></div><div class="col-sm-12 col-md-6"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input  [(ngModel)]="term" placeholder="Search..." type="search" class="form-control form-control-sm" placeholder="" aria-controls="DataTables_Table_0"></label></div></div></div><div class="row"><div class="col-sm-12"><table class="table table-centered datatable dt-responsive nowrap table-card-list dataTable no-footer dtr-inline" style="border-collapse: collapse; border-spacing: 0px 12px; width: 100%;" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                    
+                    <thead>
+                      <p *ngIf="SelectedValues.length>0" (click)="AddQuotation()" class="btn btn-success waves-effect waves-light mb-3"> +Add  To Quotations</p>
+                      <tr class="bg-transparent" role="row"><th style="width: 24px;" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="
+                              
+                                  
+                                  
+                              
+                          : activate to sort column ascending">
+                              <div class="form-check text-center">
+                                  <input type="checkbox"  (click)="AddAllQouted()"  class="form-check-input" id="invoicecheck">
+                                  <label class="form-check-label" for="invoicecheck"></label>
+                              </div>
+                          </th>
+
+                          <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 126px;" aria-label="Billing Name: activate to sort column ascending">Condition</th>
+                          <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 76px;" aria-label="Amount: activate to sort column ascending">Quntity</th>
+                          <th class="sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 64px;" aria-label="Status: activate to sort column ascending" aria-sort="descending">Price</th>
+                          <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 128px;" aria-label="Download Pdf: activate to sort column ascending">NOTES &
+                            INQUERIES</th>
+                          <th style="width: 120px;" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending">CREATED Date</th>
+                          <th style="width: 120px;" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending">Action</th>
+                        </tr>
+                  </thead>
+                  <tbody>
+                  <tr role="row" class="odd"  *ngFor="let item of gettickets|filter:term | paginate:{itemsPerPage:7,currentPage:p}; let i=index;">
+                    <td class="dtr-control" tabindex="0">
+                     
+                      <div class="form-check text-center">
+                          <input type="checkbox" class="form-check-input" id="invoicecheck3" *ngIf="!checked;else chk" (click)="AddQuote(item.ticketinfo.ticketId)" type="checkbox">
+                          <label class="form-check-label" for="invoicecheck3"></label>
+                      </div>
+                      <ng-template #chk>
+                        <div class="form-check text-center">
+                          <input type="checkbox" class="form-check-input" id="invoicecheck3"(click)="AddQuote(item.ticketinfo.ticketId)" type="checkbox" checked>
+                          <label class="form-check-label" for="invoicecheck3"></label>
+                      </div>
+                     
+                      </ng-template>
+                  </td>
+                          
+                     
+                          <td>    {{item.ticketinfo.cond|slice:0:15}}</td>
+                          
+                          <td>
+                            {{item.ticketinfo.qty}}
+                          </td>
+                          <td >
+                               $ {{item.ticketinfo.askingPrice}}
+                          </td>
+                          <td>    {{item.ticketinfo.notes |slice:0:20}}</td>
+                          <td>
+                            {{item.ticketinfo.creationDate |date}}
+                          </td>
+                          
+                          <td>
+                            <a (click)="ticketreply(item.ticketinfo.ticketId)"  class="px-3 text-primary"><i class=" uil uil-comment-alt-dots font-size-18"></i>({{item.perticketreplies}})  Replies</a>  
+                            <a *ngIf="!checked" (click)="AddQuotation1(item.ticketinfo.ticketId)" class="px-3 text-info"> <i class="uil uil-plus-square " title="Quote"></i></a>
+                          <br>
+
+                            <a class="btn btn-outline-secondary btn-sm edit"   (click)="Edit(Update,item.ticketinfo.ticketId)" title="Edit">
+           <i class="fas fa-pencil-alt" title="Edit"></i>
+       </a>
+    
+       <!-- <a class="btn btn-outline-danger btn-sm edit" (click)="deleteticket(item.ticketinfo.ticketId)"  title="Remove">
+         <i class="uil-trash-alt"></i>
+     </a > -->
+                            </td> 
+                      </tr>
+                    
+                    </tbody>
+                 
+              </table>
+              <div class="row">
+                <div class="col-md-12">
+                 <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                </div>
+
+              </div>
+            </div></div>
+           
+      </div>
+  </div>
+  <!-- end row -->
+  
+</div>
+  </div>
+
+
+  <ng-template #Create let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Create New RFQ Ticket </h5>
+      <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+  
+      </button>
+    </div>
+  
+    <div class="modal-body">
+  
+      <form [formGroup]="ticketForm">
+        <fieldset class="mb-3">
+          <div class="form-group row">
+            <label class="col-form-label col-lg-2">Conditions <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="text"  formControlName="Cond" placeholder="Please Enter The Conditions" class="form-control">
+            </div>
+          </div>
+          <br>
+          <div class="form-group row">
+            <label class="col-form-label col-lg-2">Qty <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="number" (keypress)="keyPress($event)" formControlName="Qty" placeholder="Qty of Tickets" class="form-control">
+              <input type="hidden" formControlName="TicketTypeId">
+            </div>
+          </div>
+          <br>
+          <div class="form-group row" >
+            <label class="col-form-label col-lg-2">AskingPrice <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="number" formControlName="AskingPrice" (keypress)="keyPress($event)" placeholder="AskingPrice" class="form-control">
+            </div>
+          </div>
+       <br>
+       
+          <br>
+          <!-- <div class="form-group row"*ngIf="quotenum">
+            <label class="col-form-label col-lg-2">QuoteNumber <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="number" formControlName="QuoteNumber" placeholder="QuoteNumber" class="form-control">
+            </div>
+          </div> -->
+          <div class="form-group row">
+            <label class="col-form-label col-lg-2">NOTES & INQUERIES  <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="text" formControlName="Notes"   placeholder="NOTES &INQUERIES" class="form-control">
+            </div>
+          </div>
+          <br>
+          <div class="form-group row">
+            <label class="col-form-label col-lg-2">Description <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <textarea formControlName="Description" placeholder="Description About Ticket" class="form-control"></textarea>
+          
+            </div>
+          </div>   
+         <br>
+        </fieldset>
+
+       
+
+      
+
+    
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal" #dismismodal>Close</button>
+     
+      <button type="button" class="btn btn-info" (click)="saveTicket()">Save Ticket</button>
+    </div>
+  </ng-template>
+  <!-- <ng-template #Create let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0">Create New RFQ Ticket </h5>
+      <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+  
+      </button>
+    </div>
+  
+    <div class="modal-body">
+  
+      <form [formGroup]="ticketForm">
+        <fieldset class="mb-3">
+          <div class="form-group row">
+            <label class="col-form-label col-lg-2">Conditions <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="text"  formControlName="Cond" placeholder="Please Enter The Conditions" class="form-control">
+            </div>
+          </div>
+          <br>
+          <div class="form-group row">
+            <label class="col-form-label col-lg-2">Qty <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="number" (keypress)="keyPress($event)" formControlName="Qty" placeholder="Qty of Tickets" class="form-control">
+              <input type="hidden" formControlName="TicketTypeId">
+            </div>
+          </div>
+          <br>
+          <div class="form-group row" >
+            <label class="col-form-label col-lg-2">AskingPrice <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="number" formControlName="AskingPrice" (keypress)="keyPress($event)" placeholder="AskingPrice" class="form-control">
+            </div>
+          </div>
+       <br>
+       
+          <br>
+         <div class="form-group row"*ngIf="quotenum">
+            <label class="col-form-label col-lg-2">QuoteNumber <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="number" formControlName="QuoteNumber" placeholder="QuoteNumber" class="form-control">
+            </div>
+          </div> -
+          <div class="form-group row">
+            <label class="col-form-label col-lg-2">NOTES & INQUERIES  <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="text" formControlName="Notes"   placeholder="NOTES &INQUERIES" class="form-control">
+            </div>
+          </div>
+          <br>
+          <div class="form-group row">
+            <label class="col-form-label col-lg-2">Description <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <textarea formControlName="Description" placeholder="Description About Ticket" class="form-control"></textarea>
+          
+            </div>
+          </div>   
+         <br>
+        </fieldset>
+
+       
+
+      
+
+    
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal" #dismismodal>Close</button>
+     
+      <button type="button" class="btn btn-info" (click)="saveTicket()">Save Contact</button>
+    </div>
+  </ng-template> -->
+  <ng-template #Update let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title mt-0"> Update Ticket </h5>
+      <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+  
+      </button>
+    </div>
+  
+    <div class="modal-body">
+  
+      <form [formGroup]="ticketupdateForm">
+        <fieldset class="mb-3">
+          <div class="form-group row">
+            <label class="col-form-label col-lg-2">Conditions <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="text"  formControlName="Cond" placeholder="Please Enter The Conditions" class="form-control">
+            </div>
+          </div>
+          <br>
+          <div class="form-group row">
+            <label class="col-form-label col-lg-2">Qty <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="number" (keypress)="keyPress($event)" formControlName="Qty" placeholder="Qty of Tickets" class="form-control">
+              <input type="hidden" formControlName="TicketTypeId">
+            </div>
+          </div>
+          <br>
+          <div class="form-group row" >
+            <label class="col-form-label col-lg-2">AskingPrice <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="number" formControlName="AskingPrice" (keypress)="keyPress($event)" placeholder="AskingPrice" class="form-control">
+            </div>
+          </div>
+       <br>
+       
+          <br>
+          <!-- <div class="form-group row"*ngIf="quotenum">
+            <label class="col-form-label col-lg-2">QuoteNumber <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="number" formControlName="QuoteNumber" placeholder="QuoteNumber" class="form-control">
+            </div>
+          </div> -->
+          <div class="form-group row">
+            <label class="col-form-label col-lg-2">NOTES & INQUERIES  <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <input type="text" formControlName="Notes"   placeholder="NOTES &INQUERIES" class="form-control">
+            </div>
+          </div>
+          <br>
+          <div class="form-group row">
+            <label class="col-form-label col-lg-2">Description <sup style="color: red;">*</sup> </label>
+            <div class="col-lg-10">
+              <textarea formControlName="Description" placeholder="Description About Ticket" class="form-control"></textarea>
+          
+            </div>
+          </div>   
+         <br>
+        </fieldset>
+
+
+       
+
+      
+
+    
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal" #dismismodal>Close</button>
+     
+      <button type="button" class="btn btn-info" (click)="updateConfirm()">Update Confirm</button>
+    </div>
+  </ng-template>
