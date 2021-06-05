@@ -14,6 +14,10 @@
               <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
                 
                 <a class="dropdown-item" (click)="TransEmployees(Addmodal,data.companies.companyId)">Add Employees</a>
+               <br>
+              <a  class="dropdown-item"  (click)="scrollModal(scrollDataModal,data.companies.companyId,'Edit')">
+                Update
+            </a>
               </div>
             </div>
             <div class="clearfix"></div>
@@ -23,7 +27,9 @@
             <div *ngIf="data.companies.profileImagePath==null" >
               <img src="assets/images.jpg"  alt="" class="avatar-lg rounded-circle img-thumbnail" />
             </div>
-            <h5 class="mt-3 mb-1">{{data.companies.comapnyName}}</h5>
+            <h5 class="mt-3 mb-1">{{data.companies.comapnyName}}   <a class="btn btn-outline-danger btn-sm edit"(click)="Createlink(Create1,data.companies.companyId)" title="Link" style="margin-left: 5px;">
+              <i class="uil-share-alt" title="Share With Others"></i>
+          </a > </h5>
          
 
      
@@ -42,7 +48,7 @@
                 <p class="mb-1">Address :</p>
                 <a  class="nav-link" style="color: black;">
                  
-                  {{data.companies.address}}
+                  {{data.companies.address|| 'NO Data'}}
                 </a>
               </div>
            
@@ -230,6 +236,92 @@
   </ng-template>
 </div>
 
+<ng-template #scrollDataModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">{{operationname}}</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
 
+    </button>
+  </div>
+  <div class="modal-body">
+    <fieldset class="mb-3">
+               
+ 
+      <div class="form-group row">
+        <label class="col-form-label col-lg-2">Company Name <sup style="color: red;">*</sup> </label>
+       <div class="col-lg-10">
+          <input type="text" [(ngModel)]="comapnyName"   placeholder="Company Name" class="form-control">
+      
+           </div>
+      </div>
+     
 
+      <div class="form-group row">
+        <label class="col-form-label col-lg-2">Address <sup style="color: red;">*</sup> </label>
+        <div class="col-lg-10">
+     
+          <textarea [(ngModel)]="address" placeholder="Address" class="form-control"></textarea>
+        </div>
+        </div>
+ 
+      <div class="form-group row"  *ngIf="Image!==null"  style="margin-top: 10px;">
+        <label class="col-form-label col-lg-2">Image <sup style="color: red;">*</sup> </label>
+        <div class="col-lg-10">
+        <img [src]="Image" style="height: 100px;width: 100px;" />
+      </div>  
+      </div>    
+      <div class="form-group row"*ngIf="Update==true" style="margin-top: 10px;">
+       <label class="col-form-label col-lg-2"> <sup style="color: red;">*</sup> </label>
+       <div class="col-lg-10">
+          <div class="custom-dropzone" multiple="false" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+             <ngx-dropzone-label>
+               <div>
+                 <p>Upload New  Image</p>
+               </div>
+             </ngx-dropzone-label>
+              <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+               <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+             </ngx-dropzone-image-preview> 
+           </div> 
+       </div>
+     </div>   
+ 
+     
+    </fieldset>
+     </div>
+  <div class="modal-footer">
+
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)=" UpdateConfirm()" *ngIf="Update==true">Save Changes</button>
+    <button type="button" class="btn btn-danger" (click)="DeleteCompany()" *ngIf="Del==true">Remove</button>
+  </div>
+</ng-template>
+<ng-template #Create1 let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title mt-0">Shareable link </h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+
+    </button>
+  </div>
+
+  <div class="modal-body">
+<div class="container">
+  <p>{{shareablelink}}   <i class="uil-copy"  (click)="copyMessage()" ngbTooltip="Copy to Clipboard"  style="    margin-left: 74px;
+    font-size: 36px;
+    color: #003f6c;"></i></p>
+    <div *ngIf="IsCoppied">
+      <ngb-alert [dismissible]="false" type="success">
+        Url Coppied successfully  ! Ctrl+v to past into your Url
+      </ngb-alert>
+    </div>
+
+   
+</div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" data-dismiss="modal" #dismismodal>Close</button>
+  
+ </div>
+</ng-template>
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "pacman" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>

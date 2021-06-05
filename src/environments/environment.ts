@@ -16,10 +16,10 @@ export const environment = {
     measurementId: ''
   },
  //apiurl:"https://localhost:44396/api/",
-  //apiurl:"https://crm-dv5.conveyor.cloud/api/",
+  //apiurl:"https://crm-qu3.conveyor.cloud/api/",
  apiurl:"https://kitchensmania.com/api/",
- //  imagepath:"https://crm-dv5.conveyor.cloud/Content/"
-   imagepath:"https://kitchensmania.com/Content/",
+ // imagepath:"https://crm-qu3.conveyor.cloud/Content/"
+ imagepath:"https://kitchensmania.com/Content/"
 
 };
 

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -10,6 +11,8 @@ import { ConpanyService } from 'src/app/core/services/company.service';
 import { FiledownloadService } from 'src/app/core/services/filedownload.service';
 import { UsersService } from 'src/app/core/services/users.service';
 import { environment } from 'src/environments/environment';
+import *  as  XLSX from 'xlsx';
+import * as fs from 'file-saver'
 @Component({
   selector: 'app-allcompanies',
   templateUrl: './allcompanies.component.html',
@@ -65,6 +68,8 @@ possible:string="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
   @ViewChild('dismismodal',{static:false}) private modal: ElementRef;
   @ViewChild('openmodal',{static:false}) private openmodal: ElementRef;
   imagebaseurl=environment.imagepath+"CompanyImages/";
+  fileName1= 'ExcelSheet.xlsx';
+@ViewChild('epltable', { static: false }) epltable: ElementRef;
     constructor(private toastr:ToastrService,private spinner: NgxSpinnerService,private fileupload:FiledownloadService,private companyservice:ConpanyService,private userservice:UsersService,private modalService: NgbModal,private router:Router) {
       
  
@@ -84,6 +89,19 @@ possible:string="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
       this._fetchData();
     }
     
+    exportexcel()
+    {
+      debugger;
+      
+      const ws: XLSX.WorkSheet =   
+      XLSX.utils.table_to_sheet(this.epltable.nativeElement);
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      XLSX.writeFile(wb, 'CrmUsers.xlsx');
+    
+    
+      
+    }
     copyMessage(){
       this.IsCoppied=true;
       const selBox = document.createElement('textarea');

@@ -22,7 +22,9 @@
             <div class="col-sm-12 col-md-12">
         
               <p class="card-sub-title">
-               
+                      
+
+                <a  style="float: right;" class="btn btn-success" (click)="exportexcel()" > <i class="bx bx-plus-medical"></i> Export Into Excel </a>
                   <a  style="float: right;" class="btn btn-info" (click)="Adddata(Addmodal)" > <i class="bx bx-plus-medical"></i> Add Company </a>
               <br>
                 </p>
@@ -38,55 +40,62 @@
             <!-- End search -->
           </div>
           <!-- Table -->
-          <div class="table-responsive">
-            <table id="basic-datatable" class="table table-bordered dt-responsive nowrap w-100 datatables">
+          <div class="table">
+            <table  class="table  dt-responsive nowrap w-100 ">
               <thead>
                 <tr>
                   <th sortable="i" (click)="Sort('i')">#</th>
                   <th sortable="companies.name" (click)="Sort('name')">Name</th>
                   <th sortable="companies.address" (click)="Sort('name')">Address</th>
-                  <th  sortable="companies.email" (click)="Sort('email')" >Image</th>
-            
+                
                   <th>Registered Users</th>
-                  <th>Action</th>
-                  <!-- <th sortable="age" (sort)="onSort($event)">Age</th> -->
+                  <!-- <th>Action</th> -->
+          
                 
                 </tr>
               </thead>
-              <tbody *ngFor="let item of UsersList|filter:term|orderBy:key :reverse|paginate:{itemsPerPage:selectedValue,currentPage:p}; let i=index;" >
-                <tr >
+              <tbody  #epltable >
+                <tr  *ngFor="let item of UsersList|filter:term|orderBy:key :reverse|paginate:{itemsPerPage:selectedValue,currentPage:p}; let i=index;">
                       <td>{{i+1}}</td>
-                  <td>
-                    {{item.companies?.comapnyName}}
-                
-                  </td>
+                      <td *ngIf="item.companies.profileImagePath!==null">
+                        <img [src]="imagebaseurl+item.Image" alt="No Image" class="avatar-xs rounded-circle me-3">
+                        <a href="javascript:void(0);" class="text-body" (click)="CompanyInfo(item)" >        {{item.companies?.comapnyName}}</a>
+                      </td>
+                       <td *ngIf="item.companies.profileImagePath==null">
+                        <div class="avatar-xs d-inline-block me-3">
+                          <div class="avatar-title bg-soft-primary rounded-circle text-primary">
+                            <img src="assets/images.jpg"  alt="" (click)="CompanyInfo(item)" class="avatar-sm rounded-circle img-thumbnail" />
+                          </div>
+                        </div>
+                        <a href="javascript:void(0);" class="text-body" (click)="CompanyInfo(item)" >        {{item.companies?.comapnyName}}</a>
+                        
+                      </td>
+               
                   <td>
                     {{item.companies?.address}}
                 
                   </td>
-                  <td *ngIf="item.companies.profileImagePath!==null"><img [src]="imagebaseurl+item.companies.profileImagePath" style="height: 40px;" /></td>
-                  <td *ngIf="item.companies.profileImagePath==null"><img src="assets/images.jpg" style="height: 40px;" /></td>
-                
+               
                   <td>
                     {{item.customers.length}}
                   </td>
             <td>
-              <a class="btn btn-outline-success btn-sm edit" (click)="CompanyDetails(Details,item.customers)" title="Details" >
+              <!-- <a class="btn btn-outline-success btn-sm edit" (click)="CompanyDetails(Details,item.customers)" title="Details" >
                 <i class="uil-users-alt"></i>
-            </a >
+            </a > -->
               <a class="btn btn-outline-secondary btn-sm edit" style="margin-left: 5px;" (click)="scrollModal(scrollDataModal,item.companies.companyId,'Edit')" title="Edit">
                 <i class="fas fa-pencil-alt" title="Edit"></i>
-            </a>
+            </a> 
          
             <!-- <a class="btn btn-outline-danger btn-sm edit" (click)="scrollModal(scrollDataModal,item.companies.companyId,'remove')" title="Remove" style="margin-left: 5px;">
               <i class="uil-trash-alt"></i>
           </a > -->
-          <a  class="btn btn-outline-danger btn-sm edit"class="btn btn-outline-info btn-sm edit" (click)="CompanyInfo(item)" title="View Profile" style="margin-left: 5px;">
+          <!-- <a  class="btn btn-outline-danger btn-sm edit"class="btn btn-outline-info btn-sm edit" (click)="CompanyInfo(item)" title="View Profile" style="margin-left: 5px;">
             <i class="uil-eye"></i>
-        </a >
-          <a class="btn btn-outline-danger btn-sm edit"(click)="Createlink(Create1,item.companies.companyId)" title="Link" style="margin-left: 5px;">
+        </a > -->
+          <!-- <a class="btn btn-outline-danger btn-sm edit"(click)="Createlink(Create1,item.companies.companyId)" title="Link" style="margin-left: 5px;">
               <i class="uil-share-alt" title="Share With Others"></i>
-          </a >
+          </a > -->
       
               
             </td>                 
